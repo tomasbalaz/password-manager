@@ -8,16 +8,15 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/passwords")
-class PasswordController {
+class PasswordController(
 
-    private val passwords: MutableList<String> = mutableListOf();
+    private var passwordService: PasswordService
+) {
 
     @GetMapping
-    fun getPasswords() : List<String> {
-        return passwords
-    }
+    fun getPasswords() = passwordService.getPasswords()
+
     @PostMapping
-    fun savePasswords(@RequestBody password: String)  {
-        passwords.add(password)
-    }
+    fun savePassword(@RequestBody savePasswordRequest: SavePasswordRequest) =
+        passwordService.savePassword(savePasswordRequest)
 }
